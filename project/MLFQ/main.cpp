@@ -11,10 +11,12 @@
 
 int main(int argc, const char * argv[]) {
     
-    Scheduler* scheduler = new Scheduler(3);
-    scheduler->addJob(10);
-    scheduler->addJob(30);
-    scheduler->addJob(20);
+    Scheduler* scheduler = new Scheduler(3, 15);
+    scheduler->addJob(50);
+    for (int i = 0; i < 20; i++) {
+        scheduler->addJob(15);
+    }
+
     scheduler->run();
     scheduler->getResult();
 }

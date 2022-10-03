@@ -76,8 +76,10 @@ void Scheduler::run() {
 
             }
             if (time == nextBoost && levels > 1) {
+                std::cout << "Boost Time!!!" << std::endl;
                 boost();
                 i = 0;
+                nextBoost = time + boostFrequency;
             }
         }
     }
