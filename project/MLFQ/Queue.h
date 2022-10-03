@@ -22,5 +22,6 @@ public:
     void goToNextJob();
     void setCurrentJobPos(int pos);
     void moveJobToTargetQ(Queue* queue);
+    void moveJobToTargetQ(int pos, Queue* queue);
 };
 #endif // QUEUE_H

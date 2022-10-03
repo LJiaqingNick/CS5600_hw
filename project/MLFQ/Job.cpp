@@ -21,13 +21,14 @@ bool Job::isJobFinish() {
 void Job::run() {
     runtime = runtime - 1;
     timeslice = timeslice - 1;
-    if (timeslice == 0) {
-        if (allotment != 0) {
-            allotment--;
-        }
-    }
     if (!isFirstExec) {
         isFirstExec = true;
+    }
+    if (timeslice == 0) {
+        if (allotment > 0) {
+            timeslice = 10;
+            allotment--;
+        }
     }
 }
 

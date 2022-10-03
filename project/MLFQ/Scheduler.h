@@ -2,6 +2,7 @@
 #define SCHEDULER_H
 #include <iostream>
 #include <vector>
+#include <limits.h>
 #include "Queue.h"
 #include "Job.h"
 
@@ -16,7 +17,7 @@ private:
     Queue* finished = new Queue();
 
 public:
-    Scheduler(int levels_i=1, int boostFrequency_i=0);
+    Scheduler(int levels_i=1, int boostFrequency_i=INT_MAX);
     void addJob(int runtime);
     bool isBoostTime();
     void boost();

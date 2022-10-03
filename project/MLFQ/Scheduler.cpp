@@ -4,6 +4,7 @@
 Scheduler::Scheduler(int levels_i, int boostFrequency_i){
     levels = levels_i;
     boostFrequency = boostFrequency_i;
+    nextBoost = boostFrequency_i;
     time = 0;
     // used for assign the pid
     pid = 0;
@@ -63,14 +64,20 @@ void Scheduler::run() {
             } else if (currentJob->getTimeslice() == 0) {
                 if ((currentJob->getAllotment() == 0)) {
                     if (i == (levels - 1)) {
+                        currentJob->setTimeslice(queues[i]->getTimeslice());
+                        currentJob->setAllotment(queues[i]->getMaxAllotment());
                         queues[i]->goToNextJob();
                     } else {
-                        queues[i]->goToNextJob();
                         queues[i]->moveJobToTargetQ(queues[i+1]);
-                        currentJob->setAllotment(queues[i+1]->getMaxAllotment());
-                        currentJob->setTimeslice(queues[i+1]->getTimeslice());
+                        queues[i]->goToNextJob();
+
                     }
                 }
+
+            }
+            if (time == nextBoost && levels > 1) {
+                boost();
+                i = 0;
             }
         }
     }
@@ -94,4 +101,16 @@ void Scheduler::getResult() {
     responseTime = responseTime / queueSize;
     turnaroundTime = turnaroundTime / queueSize;
     std::cout << "Average turnaround time: " << turnaroundTime << ", average response time: " << responseTime << std::endl;
+}
+
+void Scheduler::boost() {
+    if (levels > 1) {
+        Queue* target = queues[0];
+        for (int i = 1; i < levels; i++) {
+            for (int j = 0; j < queues[i]->getSize(); j++) {
+                queues[i]->moveJobToTargetQ(j, target);
+            }
+            queues[i]->setCurrentJobPos(0);
+        }
+    }
 }

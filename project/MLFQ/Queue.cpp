@@ -51,4 +51,20 @@ void Queue::moveJobToTargetQ(Queue* queue) {
     Job* job = jobs.at(currentJobPos);
     queue->addJob(job);
     jobs.erase(jobs.begin() + currentJobPos);
+    job->setTimeslice(queue->getTimeslice());
+    job->setAllotment(queue->getMaxAllotment());
+    if (currentJobPos >= jobs.size()) {
+        currentJobPos = 0;
+    }
+}
+
+void Queue::moveJobToTargetQ(int pos, Queue* queue) {
+    Job* job = jobs.at(pos);
+    queue->addJob(job);
+    jobs.erase(jobs.begin() + pos);
+    job->setTimeslice(queue->getTimeslice());
+    job->setAllotment(queue->getMaxAllotment());
+    if (currentJobPos >= jobs.size()) {
+        currentJobPos = 0;
+    }
 }
