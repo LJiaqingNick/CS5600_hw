@@ -134,3 +134,6 @@ dmypy.json
 # macOS
 .DS_Store
 MLFQ/mlfq
+
+# temp file
+data.txt
