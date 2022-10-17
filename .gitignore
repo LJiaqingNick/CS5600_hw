@@ -134,3 +134,4 @@ dmypy.json
 # macOS
 .DS_Store
 MLFQ/mlfq
+week6/chapter19/.vscode/settings.json
