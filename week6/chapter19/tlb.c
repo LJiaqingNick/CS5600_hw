@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
   gettimeofday(&tvEnd, NULL);
   double totalTime = (tvEnd.tv_sec - tvStart.tv_sec) * (double) 1000000 + tvEnd.tv_usec - tvStart.tv_usec;
   double averageTime = totalTime / (numTrials * numPages);
-  printf("Average Time Per Access(ns) is %f, with total %d pages\n", averageTime * 1000, numPages);
+  printf("Average Time Per Access(ns) is %f with total %d pages\n", averageTime * 1000, numPages);
 
   free(a);
   exit(0);

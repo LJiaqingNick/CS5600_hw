@@ -7,5 +7,4 @@ while [ $num_page -lt $max_pages ]
 do
   ./tlb $num_page $num_trials | tee -a data.txt
   num_page=$((num_page*2))
-  echo num_page
 done
