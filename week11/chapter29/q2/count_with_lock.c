@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/time.h>
-#define NUM_THREADS 7 // 7 children thread with 1 parent thread total 8 thread
-#define NUM_COUNTS 10000
+#define NUM_COUNTS 1000000
 
 typedef struct __counter_t {
   int value;
@@ -53,16 +52,14 @@ int main(int argc, char* argv[]) {
     perror("malloc");
     exit(EXIT_FAILURE);
   }
+  int num_thread = atoi(argv[1]);
   init(c);
-  pthread_t thread_id[NUM_THREADS];
+  pthread_t thread_id[num_thread];
   gettimeofday(&start, NULL);
-  for (int i = 0; i < NUM_THREADS; i++) {
+  for (int i = 0; i < num_thread; i++) {
     pthread_create(&thread_id[i], NULL, routine, (void *)c);
   }
-  for (int i = 0; i < NUM_COUNTS; i++) {
-    increment(c);
-  }
-  for (int i = 0; i < NUM_THREADS; i++) {
+  for (int i = 0; i < num_thread; i++) {
     pthread_join(thread_id[i], NULL);
   }
   gettimeofday(&end, NULL);

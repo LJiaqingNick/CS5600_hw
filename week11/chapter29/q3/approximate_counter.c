@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <sys/time.h>
 #define NUM_CPUS 8
-#define NUM_COUNTS 10000
+#define NUM_COUNTS 1000000
 
 typedef struct __counter_t {
   // global count
@@ -66,6 +66,7 @@ void* routine(void* arg) {
 
 
 int main(int argc, char* argv[]) {
+  int threshold = atoi(argv[1]);
   struct timeval start, end;
   counter_t c;
   arg_t thread_args[NUM_CPUS];
@@ -73,7 +74,7 @@ int main(int argc, char* argv[]) {
     thread_args[i].c = &c;
     thread_args[i].threadID = i;
   }
-  init(&c, 1000);
+  init(&c, threshold);
   pthread_t threads[NUM_CPUS];
   gettimeofday(&start, NULL);
   for (int i = 0; i < NUM_CPUS; i++) {
